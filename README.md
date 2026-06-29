@@ -8,6 +8,10 @@
 
 </div>
 
+## 预览
+<img width="650" height="2042" alt="Image_1782711471517_554" src="https://github.com/user-attachments/assets/8107167b-faa7-4689-9791-07ce3ece8081" />
+
+
 ## 安装
 
 ```bash
