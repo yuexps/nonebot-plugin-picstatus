@@ -1,11 +1,10 @@
 import asyncio
 import time
 from dataclasses import dataclass
-from typing import TypeAlias
+from typing import Any, TypeAlias
 
 import psutil
 from httpx import AsyncClient, ReadTimeout
-from psutil._common import snetio
 
 from ..config import TestSiteCfg, config
 from ..util import match_list_regexp
@@ -43,15 +42,15 @@ NetworkConnectionType: TypeAlias = NetworkConnectionOK | NetworkConnectionError
 
 
 class BaseNetworkIOCollector(
-    BaseTimeBasedCounterCollector[dict[str, snetio], list[NetworkIO]],
+    BaseTimeBasedCounterCollector[dict[str, Any], list[NetworkIO]],
 ):
     async def _calc(
         self,
-        past: dict[str, snetio],
-        now: dict[str, snetio],
+        past: dict[str, Any],
+        now: dict[str, Any],
         time_passed: float,
     ) -> list[NetworkIO]:
-        def calc_one(name: str, past_it: snetio, now_it: snetio) -> NetworkIO | None:
+        def calc_one(name: str, past_it: Any, now_it: Any) -> NetworkIO | None:
             if match_list_regexp(config.ps_ignore_nets, name):
                 # logger.info(f"网卡IO统计 {name} 匹配 {regex.re.pattern}，忽略")
                 return None
@@ -71,21 +70,21 @@ class BaseNetworkIOCollector(
             res.sort(key=lambda x: x.sent + x.recv, reverse=True)
         return res
 
-    async def _get_obj(self) -> dict[str, snetio]:
+    async def _get_obj(self) -> dict[str, Any]:
         return psutil.net_io_counters(pernic=True)
 
 
 @collector("network_io")
 class NormalDiskIOCollector(
     BaseNetworkIOCollector,
-    NormalTimeBasedCounterCollector[dict[str, snetio], list[NetworkIO]],
+    NormalTimeBasedCounterCollector[dict[str, Any], list[NetworkIO]],
 ): ...
 
 
 @collector("network_io_periodic")
 class PeriodicDiskIOCollector(
     BaseNetworkIOCollector,
-    PeriodicTimeBasedCounterCollector[dict[str, snetio], list[NetworkIO]],
+    PeriodicTimeBasedCounterCollector[dict[str, Any], list[NetworkIO]],
 ): ...
 
 

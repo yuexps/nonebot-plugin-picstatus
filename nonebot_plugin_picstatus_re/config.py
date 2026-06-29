@@ -20,7 +20,7 @@ BG_PRELOAD_CACHE_DIR.mkdir(parents=True, exist_ok=True)
 RES_PATH = Path(__file__).parent / "res"
 ASSETS_PATH = RES_PATH / "assets"
 TEMPLATE_PATH = RES_PATH / "templates"
-DEFAULT_BG_PATH = ASSETS_PATH / "default_bg.webp"
+DEFAULT_BG_PATH = ASSETS_PATH / "default_bg_0.webp"
 DEFAULT_AVATAR_PATH = ASSETS_PATH / "default_avatar.webp"
 
 ProcSortByType = Literal["cpu", "mem"]
@@ -44,7 +44,7 @@ class ConfigModel(BaseModel):
 
     # region behavior
     ps_template: str = "default"
-    ps_command: list[str] = ["运行状态", "状态", "zt", "yxzt", "status"]
+    ps_command: list[str] = ["状态","status"]
     ps_only_su: bool = False
     ps_need_at: bool = False
     ps_reply_target: bool = True
@@ -52,10 +52,9 @@ class ConfigModel(BaseModel):
     # endregion
 
     # region style
-    ps_bg_provider: str = "loli"
+    ps_bg_provider: str = "local"
     ps_bg_preload_count: int = 2
-    ps_bg_lolicon_r18_type: Literal[0, 1, 2] = 0
-    ps_bg_local_path: Path = DEFAULT_BG_PATH
+    ps_bg_local_path: Path = ASSETS_PATH
     ps_default_avatar: Path = DEFAULT_AVATAR_PATH
     # endregion
 
@@ -103,7 +102,7 @@ class ConfigModel(BaseModel):
         ),
     ]
     ps_sort_sites: bool = True
-    ps_test_timeout: int = 5
+    ps_test_timeout: int = 3
     # endregion
 
     # region process

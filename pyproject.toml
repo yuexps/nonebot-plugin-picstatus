@@ -1,16 +1,16 @@
 [project]
-name = "nonebot-plugin-picstatus"
+name = "nonebot-plugin-picstatus-re"
 dynamic = ["version"]
 description = "A NoneBot2 plugin generates a picture which shows the status of current device"
-authors = [{ name = "LgCookie", email = "lgc2333@126.com" }]
+authors = [{ name = "yuexps", email = "yuexps@qq.com" }]
 dependencies = [
     "nonebot2>=2.4.3",
     "nonebot-plugin-apscheduler>=0.5.0",
     "nonebot-plugin-alconna>=0.59.4",
     "nonebot-plugin-uninfo>=0.9.0",
-    "nonebot-plugin-htmlrender>=0.6.6",
+    "nonebot-plugin-htmlkit",
     "nonebot-plugin-localstore>=0.7.4",
-    "cookit[jinja,loguru,playwright,pydantic,nonebot-localstore]>=0.13.3",
+    "cookit[jinja,loguru,pydantic,nonebot-localstore]>=0.13.3",
     "psutil>=7.0.0",
     "py-cpuinfo>=9.0.0",
     "anyio>=4.10.0",
@@ -24,11 +24,11 @@ readme = "README.md"
 license = { text = "MIT" }
 
 [project.urls]
-homepage = "https://github.com/lgc-NB2Dev/nonebot-plugin-picstatus"
+homepage = "https://github.com/yuexps/nonebot-plugin-picstatus-re"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.version]
-path = "nonebot_plugin_picstatus/__init__.py"
+path = "nonebot_plugin_picstatus_re/__init__.py"

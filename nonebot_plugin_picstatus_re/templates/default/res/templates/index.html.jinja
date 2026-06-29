@@ -1,18 +1,15 @@
 {% from 'macros.html.jinja' import header, cpu_mem, disk, network, process, footer %}
-
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="/default/res/css/index.css" />
-  {% for css in config.ps_default_additional_css -%}
-  <link rel="stylesheet" href="{{ css }}" />{% endfor %}
+  <style>
+    {{ css_content }}
+  </style>
 </head>
-
 <body>
-  <div class="main-background" data-background-image="/api/background">
+  <div class="main-background"{% if bg_base64 %} style="background-image: url('data:image/webp;base64,{{ bg_base64 }}');"{% endif %}>
     <div class="main-background-mask">
       <div class="main">
         {% for name in config.ps_default_components %}
@@ -34,11 +31,4 @@
     </div>
   </div>
 </body>
-
-<script src="/js/init-global.js"></script>
-<script src="/js/lazy-load.js"></script>
-{% for script in config.ps_default_additional_script -%}
-<script src="{{ script }}"></script>{% endfor %}
-<script src="/js/load-plugin.js"></script>
-
 </html>

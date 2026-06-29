@@ -51,17 +51,17 @@ if config.ps_need_at:
 if config.ps_only_su:
     usage += "\n注意：仅SuperUser可以使用此指令"
 
-__version__ = "2.2.2"
+__version__ = "2.3.0"
 __plugin_meta__ = PluginMetadata(
-    name="PicStatus",
+    name="PicStatus-Re",
     description="以图片形式显示当前设备的运行状态",
     usage=usage,
     type="application",
-    homepage="https://github.com/lgc-NB2Dev/nonebot-plugin-picstatus",
+    homepage="https://github.com/yuexps/nonebot-plugin-picstatus-re",
     config=ConfigModel,
     supported_adapters=inherit_supported_adapters(
         "nonebot_plugin_alconna",
         "nonebot_plugin_uninfo",
     ),
-    extra={"License": "MIT", "Author": "LgCookie"},
+    extra={"License": "MIT", "Author": "yuexps"},
 )

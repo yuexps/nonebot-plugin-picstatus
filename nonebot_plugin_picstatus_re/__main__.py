@@ -1,7 +1,5 @@
 import asyncio
 
-from cookit.loguru import warning_suppress
-from cookit.nonebot.alconna import extract_reply_msg
 from nonebot import logger, on_command
 from nonebot.adapters import Bot as BaseBot, Event as BaseEvent, Message as BaseMessage
 from nonebot.matcher import current_bot, current_event, current_matcher
@@ -9,9 +7,9 @@ from nonebot.params import CommandArg
 from nonebot.permission import SUPERUSER
 from nonebot.rule import Rule, to_me
 from nonebot.typing import T_State
-from nonebot_plugin_alconna.uniseg import Image, OriginalUniMsg, UniMessage, image_fetch
+from nonebot_plugin_alconna.uniseg import UniMessage
 
-from .bg_provider import BgBytesData, bg_preloader
+from .bg_provider import bg_preloader
 from .collectors import collect_all
 from .config import config
 from .misc_statistics import bot_avatar_cache, bot_info_cache, cache_bot_avatar
@@ -38,24 +36,8 @@ stat_matcher = on_command(
 )
 
 
-async def get_pic_from_msg(msg: UniMessage) -> BgBytesData | None:
-    msg = r if ((r := extract_reply_msg(msg)) and Image in r) else msg
-    if Image not in msg:
-        return None
-    img = msg[Image, 0]
-    data = await image_fetch(
-        current_event.get(),
-        current_bot.get(),
-        current_matcher.get().state,
-        img,
-    )
-    if not data:
-        return None
-    return BgBytesData(data=data, mime=img.mimetype or "image")
-
-
 @stat_matcher.handle()
-async def _(bot: BaseBot, event: BaseEvent, state: T_State, msg: OriginalUniMsg):
+async def _(bot: BaseBot, event: BaseEvent, state: T_State):
     if (
         (bot.self_id not in bot_avatar_cache)
         and (info := bot_info_cache.get(bot.self_id))
@@ -63,14 +45,8 @@ async def _(bot: BaseBot, event: BaseEvent, state: T_State, msg: OriginalUniMsg)
     ):
         await cache_bot_avatar(info.avatar, bot, event, state)
 
-    async def get_bg():
-        with warning_suppress("Failed to fetch image from user message"):
-            if bg := await get_pic_from_msg(msg):
-                return bg
-        return await bg_preloader.get()
-
     try:
-        bg, collected = await asyncio.gather(get_bg(), collect_all())
+        bg, collected = await asyncio.gather(bg_preloader.get(), collect_all())
         ret = await render_current_template(collected=collected, bg=bg)
     except Exception:
         logger.exception("获取运行状态图失败")
