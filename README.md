@@ -24,6 +24,27 @@ pip install nonebot-plugin-picstatus-re
 - **触发指令**：`状态` / `status`（可在配置中修改）
 - **参数配置**：参数均在项目的 `.env.*` 文件中配置，完整说明请参考 **[.env.example](.env.example)**。
 
+## 常见问题
+
+### 启动时出现 `Fontconfig error` 警告
+
+如果在启动时控制台输出大量类似以下的报错：
+```log
+Fontconfig error: Cannot load default config file: No such file: (null)
+Fontconfig error: No writable cache directories
+```
+
+**解决方法**：
+
+1. 在 Debian/Ubuntu 系统下，安装系统 `fontconfig` 依赖：
+   ```bash
+   sudo apt update && sudo apt install -y fontconfig fonts-noto-cjk
+   ```
+2. 在项目的 `.env` 配置文件中指定环境变量：
+   ```env
+   FONTCONFIG_PATH="/etc/fonts"
+   ```
+
 ## 鸣谢
 
 - [nonebot-plugin-picstatus](https://github.com/lgc-NB2Dev/nonebot-plugin-picstatus) (原版插件)

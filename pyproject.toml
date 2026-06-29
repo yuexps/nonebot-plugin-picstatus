@@ -24,7 +24,7 @@ readme = "README.md"
 license = { text = "MIT" }
 
 [project.urls]
-homepage = "https://github.com/yuexps/nonebot-plugin-picstatus-re"
+homepage = "https://github.com/yuexps/nonebot-plugin-picstatus"
 
 [build-system]
 requires = ["hatchling"]

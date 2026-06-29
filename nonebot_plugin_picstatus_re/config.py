@@ -2,13 +2,10 @@ import shutil
 from pathlib import Path
 from typing import Literal
 
-from cookit.nonebot.localstore import ensure_localstore_path_config
 from nonebot import get_plugin_config
 from nonebot.compat import type_validate_python
 from nonebot_plugin_localstore import get_plugin_cache_dir
 from pydantic import AnyHttpUrl, BaseModel, Field
-
-ensure_localstore_path_config()
 
 CACHE_DIR = get_plugin_cache_dir()
 
